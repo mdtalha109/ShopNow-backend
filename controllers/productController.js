@@ -1,9 +1,13 @@
 import asyncHandler from 'express-async-handler';
 import Product from '../models/productModel.js'
+import APIFeatures from '../utils/apiFeatures.js'
 
 //function for fetching product for product list
 export const getProducts = asyncHandler(async(req, res) => {
-    const products = await Product.find({});
+
+    const apiFeatures = new APIFeatures(Product.find(), req.query).search()
+    const products = await apiFeatures.query;
+    
     res.json(products);
 }) 
 
