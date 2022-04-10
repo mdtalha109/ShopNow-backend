@@ -1,28 +1,43 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js';
-import  products from './data/products.js';
 
+import bodyparser from 'body-parser'
+
+
+import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
+
+import cors from 'cors'
+
+
+
+
+dotenv.config({
+    path: '../.env'
+});
 
 dotenv.config();
 
-connectDB()
+connectDB();
 
 const app = express();
+app.use(cors())
 
-app.get('/api/products', function(req, res){
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+app.use(bodyparser.urlencoded({ extended: true }));
 
-    res.json(products);
-})
+app.use(express.urlencoded({ extended: true }))
 
-app.get('/api/products/:id', function(req, res){
-    const product = products.find(p => p._id === req.params.id)
-    res.json(product);
-})
+app.use(express.json())
 
-const PORT = process.env.PORT || 5000
+app.use('/api/products', productRoutes);
+app.use('/api/user', userRoutes)
+app.use('/api/orders', orderRoutes)
 
-app.listen(PORT, console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
+app.listen(process.env.PORT || 2000);
+
+app.listen(process.env.PORT, console.log(`server running in development mode on port ${process.env.PORT}`));
+
+
+  

@@ -58,16 +58,24 @@ export const deleteProduct = asyncHandler(async(req, res) => {
 
 // create Product
 export const createProduct = asyncHandler(async(req, res) => {
+
+    const {productName, productCategory, productImage,productBrand,productPrice, productDescription,countInStock} = req.body 
+    console.log(req) 
+    console.log(productName)
+    console.log(productCategory)
+    console.log(productImage)
+
+
     const product = new Product({
-        name: 'sample user',
-        price: 0,
+        name: productName,
+        price: productPrice,
         user: req.user._id,
-        image: './image/sample.jpg',
-        brand: 'sample brand',
-        category: 'sample category',
-        countInStock: 0,
+        image: productImage,
+        brand: productBrand,
+        category:productCategory,
+        countInStock: countInStock,
         numReviews: 0,
-        description: 'sample desription'
+        description: productDescription
     })
 
     const createdProduct = await product.save()
