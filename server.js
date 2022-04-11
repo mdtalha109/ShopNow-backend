@@ -35,9 +35,9 @@ app.use('/api/products', productRoutes);
 app.use('/api/user', userRoutes)
 app.use('/api/orders', orderRoutes)
 
-app.listen(process.env.PORT || 2000);
+app.listen(process.env.PORT || 4000);
 
-app.listen(process.env.PORT, console.log(`server running in development mode on port ${process.env.PORT}`));
+
 
 
   
