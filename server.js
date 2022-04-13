@@ -35,7 +35,10 @@ app.use('/api/products', productRoutes);
 app.use('/api/user', userRoutes)
 app.use('/api/orders', orderRoutes)
 
-app.listen(process.env.PORT || 4000);
+const PORT = process.env.PORT || 2000;
+
+app.listen(PORT);
+console.log(PORT)
 
 
 
