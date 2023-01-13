@@ -26,4 +26,30 @@ export const addOrder = asyncHandler(async(req, res) => {
     }
 }) 
 
+
+
+export const getOrderById = asyncHandler(async(req, res) => {
+    const {order_id} =req.body
+
+    console.log(order_id)
+
+    try{
+
+        let orderDetail = await Order.findById(order_id).populate("user").populate({path: "orderItems.product"});
+        console.log("orderDetail: ",orderDetail)
+        if(orderDetail){
+            res.json(orderDetail);
+        }
+        else {
+            res.status(404).json({message: 'Something went wrong'})
+        }
+
+    } catch(err){
+        res.json({message: "something went wrong"})
+    }
+   
+}) 
+
+
+
 export default addOrder
