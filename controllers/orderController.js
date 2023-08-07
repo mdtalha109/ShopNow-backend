@@ -29,6 +29,7 @@ export const addOrder = asyncHandler(async(req, res) => {
 
 
 export const getOrderById = asyncHandler(async(req, res) => {
+    console.log("inside get order details")
     const {order_id} =req.body
 
     console.log(order_id)
@@ -36,7 +37,7 @@ export const getOrderById = asyncHandler(async(req, res) => {
     try{
 
         let orderDetail = await Order.findById(order_id).populate("user").populate({path: "orderItems.product"});
-        console.log("orderDetail: ",orderDetail)
+        
         if(orderDetail){
             res.json(orderDetail);
         }
@@ -49,6 +50,27 @@ export const getOrderById = asyncHandler(async(req, res) => {
     }
    
 }) 
+
+export const getOrdersByUser = asyncHandler(async (req, res) => {
+    
+    try {
+        console.log("req.user._id: ", req.user._id)
+      const orders = await Order.find({user:req.user._id}).sort({ createdAt: 1 }).populate('orderItems.product');
+
+
+      console.log("orders: ", orders)
+  
+      if (orders.length === 0) {
+        return res.status(404).json({ message: 'No orders found for this user.' });
+      }
+  
+      res.status(200).json(orders);
+    } catch (error) {
+      // Handle any unexpected errors
+      res.status(500).json({ message: 'Failed to fetch orders for this user.' });
+    }
+  });
+  
 
 
 
