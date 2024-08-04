@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 
 const orderSchema = mongoose.Schema({
+
+    order_id: {
+        type: String,
+        required: true,
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -29,12 +34,6 @@ const orderSchema = mongoose.Schema({
     paymentMethod: {
         type: String,
         required: false
-    },
-    paymentResult: {
-        id: { type: String },
-        status: { type: String },
-        update_time: { type: String },
-        email_address: { type: String }
     },
     taxPrice: {
         type: Number,
@@ -69,7 +68,7 @@ const orderSchema = mongoose.Schema({
         required: false,
         default: false
     },
-    DeliveredAt: {
+    deliveredAt: {
         type: Date
     }
 
